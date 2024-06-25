@@ -7,7 +7,7 @@ const ocr = require('../service/ocr')
 router.use(express.urlencoded({ extended: true }))
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
 router.post('/add', async (req, res) => {
