@@ -3,7 +3,9 @@ const router = express.Router();
 const puppeteer = require('puppeteer');
 const path = require('path');
 const request = require('request');
-const ocr = require('../service/ocr')
+const timerModule = require('../service/timer')
+const ocr = require('../service/ocr');
+const { start } = require('repl');
 router.use(express.urlencoded({ extended: true }))
 
 router.get('/', (req, res) => {
@@ -11,23 +13,23 @@ router.get('/', (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    // 추가로 시간 입력
-    console.log('도착');
-    console.log(req.body);
-    const userId = req.body.username;
-    const userPwd = req.body.pwd;
-    const concertId = req.body.concert;
-    const indexToSelect = req.body.date - 1;
+    const { username, pwd, concert, date, time } = req.body;
+    const userId = username;
+    const userPwd = pwd;
+    const concertId = concert;
+    const startTime = time;
+    console.log(startTime);
+    const indexToSelect = date - 1;
+    // 페이지 설정
     const browser = await puppeteer.launch({
         headless: false,
         args: ['--disable-web-security', '--disable-features=IsolateOrigins', ' --disable-site-isolation-trials', '--window-size=1400,1080']
     });
-
     let page = await browser.newPage();
     await page.setViewport({ width: 1400, height: 1080 });
 
+    // 인터파크 페이지 로그인
     await page.goto('https://accounts.interpark.com/login/form');
-    console.log(userId, userPwd)
     await page.type('#userId', userId);
     await page.type('#userPwd', userPwd);
 
@@ -35,9 +37,18 @@ router.post('/add', async (req, res) => {
     await page.click('#btn_login');
     await page.goto('https://tickets.interpark.com/goods/' + concertId);
 
-    // 여기서 이거 나올 때까지 새로 고침
-    await page.waitForSelector('ul[data-view="days"]');
+    // 여기서 날짜 입력 받고 특정 시간에 새로 고침, 나올 때까지 기다림
+    while (true){
+        const timer = await timerModule('https://tickets.interpark.com/goods/' + concertId)
+        if (timer == startTime){
+            page.reload()
+            break;
+        }
+        console.log('qkemda'+timer);
+        page.reload();
+    }
 
+    await page.waitForSelector('ul[data-view="days"]');
     await page.evaluate((indexToSelect) => {
         const ulElement = document.querySelector('ul[data-view="days"]');
         const liElements = ulElement.querySelectorAll('li');
@@ -74,8 +85,6 @@ router.post('/add', async (req, res) => {
 
     await frame.waitForSelector('.validationTxt')
     await frame.waitForSelector('#imgCaptcha')
-
-
     const imageData = await frame.evaluate(() => {
         const imgElement = document.getElementById('imgCaptcha');
         const base64Data = imgElement.src.split(',')[1];
