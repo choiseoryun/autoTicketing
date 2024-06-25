@@ -11,7 +11,7 @@
 ![javascript](https://img.shields.io/badge/javascript-F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=white)
 ![html5](https://img.shields.io/badge/html5-E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white)
 
-추가로 네이버 클라우스 ocr 사용하고 있습니다
+추가로 네이버 클라우드 ocr 사용하고 있습니다
 
 <h2>사용 방법</h2>
 - 서버를 실행시킨다
