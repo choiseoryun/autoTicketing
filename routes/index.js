@@ -11,7 +11,6 @@ router.use(express.urlencoded({ extended: true }))
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../views/index.html'));
 });
-
 router.post('/add', async (req, res) => {
     const { username, pwd, concert, date, time } = req.body;
     const userId = username;
