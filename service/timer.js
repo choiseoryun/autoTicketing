@@ -1,4 +1,4 @@
-// 서버 시간을 가져오는 클래스
+// 서버 시간을 가져오는 클래스,, 사용하지는 않을듯
 const axios = require('axios')
 
 async function getServerTime(urlData) {
