@@ -34,9 +34,7 @@ router.post('/add', async (req, res) => {
     await page.click('#btn_login');
     await page.goto('https://tickets.interpark.com/goods/' + concertId);
     // 대기 시간 추가
-    sleep(startTime);
-
-
+    await sleep(startTime);
     await page.waitForSelector('ul[data-view="days"]');
     await page.evaluate((indexToSelect) => {
         const ulElement = document.querySelector('ul[data-view="days"]');
