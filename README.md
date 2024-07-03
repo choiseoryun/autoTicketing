@@ -14,4 +14,21 @@
 추가로 네이버 클라우드 ocr 사용하고 있습니다
 
 <h2>사용 방법</h2>
-- 서버를 실행시킨다
+<h5>서버 실행 전 준비 방법</h5>
+
+- CLOVA OCR 도메인 생성 이후 API Gateway를 연동한다
+  
+- 연동 이후 Secret Key, APIGW Invoke URL 값을 가져온다
+  
+- .env 파일 생성 이후 SERV_PORT, SECRET_KEY, SECRET_URL에 포트번호, Secret Key, APIGW Invoke URL 순서대로 넣는다
+
+<h5>준비가 되었다면</h5>
+
+- 서버를 실행한다(node ./server.js)
+
+- ID, 비밀번호, 공연번호, 회차, 오픈시간을 입력한다
+  이때 회차는 아래 그림과 같이 들어갔을 때 나오는 번호를 말한다
+
+  ![image](https://github.com/choiseoryun/autoTicketing/assets/143160067/29140c5c-8e8c-4e93-b888-85aa82aadff5)
+
+- 티켓팅을 한다!
