@@ -32,3 +32,4 @@
   ![image](https://github.com/choiseoryun/autoTicketing/assets/143160067/29140c5c-8e8c-4e93-b888-85aa82aadff5)
 
 - 티켓팅을 한다!
+<h2>실행 영상</h2>
