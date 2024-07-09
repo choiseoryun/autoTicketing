@@ -21,7 +21,7 @@ const ocrModule = (data) => {
     return new Promise((resolve, reject) => {
         axios.post(serverUrl, myData, options)
             .then((res) => {
-                const combinedText = res.data.images[0].fields.map(field => field.inferText.trim()).join('');
+                const combinedText = res.data.images[0].fields.map(field => field.inferText.replace(/\s/g, '')).join('');
                 resolve(combinedText);
                 console.log(combinedText);
                 console.log(res.data.images[0])
